@@ -16,6 +16,6 @@ A centeral database with the different types of beds and their lifetime data, pr
 
 ## Setup
 
-Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager) or manually using this URL:
+Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager) manually using this URL:
 
     https://github.com/j7126/OctoPrint-BedUsage/archive/master.zip
