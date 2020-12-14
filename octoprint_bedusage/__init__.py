@@ -142,7 +142,6 @@ class BedUsagePlugin(octoprint.plugin.SettingsPlugin,
     at_temp_start_time = None
     current_layer = 0
     extruder_mode = ""
-    axis_mode = ""
 
     def initialize(self):
         self.db = Database(self.get_plugin_data_folder(),
@@ -201,7 +200,6 @@ class BedUsagePlugin(octoprint.plugin.SettingsPlugin,
             self.extruded_filament_first_layer = 0.0
             self.current_layer = 0
             self.extruder_mode = ""
-            self.axis_mode = ""
             message = self.get_message()
             self._plugin_manager.send_plugin_message(self._identifier, message)
 
@@ -275,19 +273,19 @@ class BedUsagePlugin(octoprint.plugin.SettingsPlugin,
             self.extruder_mode = "relative"
 
         elif gcode in ("G90"):
-            self.axis_mode = "absolute"
+            self.extruder_mode = "absolute"
 
         elif gcode in ("G91"):
-            self.axis_mode = "relative"
+            self.extruder_mode = "relative"
 
         elif gcode in ("G0", "G1"):
             CmdDict = dict((x, float(y)) for d, x, y in (
                 re.split('([A-Z])', i) for i in cmd.upper().split()))
             if "E" in CmdDict:
                 e = float(CmdDict["E"])
-                if self.extruder_mode == "absolute" or (self.extruder_mode == "" and self.axis_mode == "absolute"):
+                if self.extruder_mode == "absolute":
                     a = e - self.extruded_filament - self.extruded_filament_temp
-                elif self.extruder_mode == "relative" or (self.extruder_mode == "" and self.axis_mode == "relative"):
+                elif self.extruder_mode == "relative":
                     a = e
                 else:
                     return
